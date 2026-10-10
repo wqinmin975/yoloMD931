@@ -1,0 +1,23 @@
+# MAE 航拍域骨干预训练配置
+# 用法: python train_mae.py --config configs/mae_config.yaml
+
+# 数据
+unlabeled_dir: ./data/visdrone_unlabeled/train/images  # 无标注航拍帧
+save_dir: ./checkpoints/mae
+
+# 模型
+num_classes: 10
+img_size: 640
+patch_size: 32          # 与 backbone C5 stride=32 对齐
+mask_ratio: 0.75        # MAE 推荐 0.75
+
+# 训练
+batch_size: 16
+epochs: 800
+lr: 1.5e-4              # AdamW
+weight_decay: 0.05
+workers: 8
+
+# 输出
+# 训练完成后: checkpoints/mae/mae_backbone_best.pth
+# 加载到 MD-YOLO student: load_state_dict(strict=False)

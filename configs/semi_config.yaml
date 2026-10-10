@@ -1,0 +1,42 @@
+# SoftTeacher 半监督训练 MD-YOLO 配置
+
+# 数据
+labeled_img: ./data/visdrone/VisDrone2019-DET-train/images
+labeled_lbl: ./data/visdrone/VisDrone2019-DET-train/labels
+unlabeled_dir: ./data/visdrone_unlabeled/train/images  # 额外无标注帧
+mae_ckpt: ./checkpoints/mae/mae_backbone_best.pth       # MAE 预训练骨干
+save_dir: ./checkpoints/softteacher
+
+# 模型
+num_classes: 10         # VisDrone 10 类
+img_size: 640
+
+# EMA Teacher
+ema_init: 0.999
+ema_final: 0.9999
+ema_warmup: 2000        # 前 2000 step cosine warmup
+
+# 伪标签过滤 (航拍小目标专用)
+pseudo_conf: 0.5        # 基础阈值
+pseudo_nms: 0.7
+min_box_size: 4         # 过滤 <4px 的噪声框
+# per_head_thr 在代码中写死: [0.6, 0.5, 0.4, 0.4]
+# P2 (160x160) 最严格 0.6, P5 (20x20) 放宽到 0.4
+
+# 损失权重
+unsup_w: 1.0            # 无监督损失权重, 可随 epoch 线性 ramp-up
+
+# 训练
+batch_size: 16
+epochs: 300
+lr: 0.01                # SGD
+weight_decay: 5e-4
+momentum: 0.937
+workers: 8
+save_interval: 20
+
+# 跨数据集泛化测试 (训练完后单独跑)
+# test_on:
+#   - VisDrone2019-DET-val
+#   - UAVDT-test (zero-shot, 不微调)
+#   - UAVDT-finetune-5pct (5% 标注微调)
