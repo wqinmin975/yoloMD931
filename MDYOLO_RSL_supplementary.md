@@ -1,9 +1,9 @@
 # Supplementary Material: An Empirical Reproducibility Audit of MD-YOLO for Small-Object Detection in UAV Imagery
 
-Wang Qinmin¹, Wang Hongyuan¹, Li Peipei¹, and Wang Zongzhong²,*
+Qinmin Wang¹, Zhenzhen Hu², Hongyuan Wang¹, and Yuming Sun¹,*
 
 ¹ School of Computer Science and Artificial Intelligence, Guangdong University of Science and Technology, Dongguan, China
-² School of Electromechanical Engineering, Guangdong University of Technology, Guangzhou, China
+² Chengdu University of Information Technology, Chengdu, China
 
 This Supplementary Material supports the Research Letter and contains three items referenced from the main text: (i) the complete runtime-defect table (Table S1), (ii) pseudocode for the MAC backbone and DAFA neck, and (iii) full reproducibility commands.
 

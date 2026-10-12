@@ -37,9 +37,9 @@ CONTENT_W = A4[0] - 2 * cm * 3  # content width in points
 
 # ----- equation rendering (mathtext, no LaTeX install needed) -----
 EQUATIONS = {
-    1: r"$p_x = g_x + (2\sigma(t_x)-1)\cdot s,\; p_y = g_y + (2\sigma(t_y)-1)\cdot s,\; p_w = s\,e^{t_w},\; p_h = s\,e^{t_h}$",
+    1: r"$p_x = g_x + (2\sigma(t_x)-1)\cdot s,\; p_y = g_y + (2\sigma(t_y)-1)\cdot s,\; p_w = s\cdot e^{t_w},\; p_h = s\cdot e^{t_h}$",
     2: r"$m = \sigma(c)^{\alpha}\cdot \mathrm{IoU}^{\beta}$",
-    3: r"$L_{\mathrm{VFL}} = -\alpha_v\, q\,[\,q\log p + (1\!-\!q)\log(1\!-\!p)\,] \;-\; \alpha_v\, p^{\gamma}\log(1\!-\!p)$",
+    3: r"$L_{\mathrm{VFL}} = -\alpha_{v}\, q\,[\,q\log p + (1\!-\!q)\log(1\!-\!p)\,] \;-\; \alpha_{v}\, p^{\gamma}\log(1\!-\!p)$",
     4: r"$L_{\mathrm{WIoU}} = 1 - \exp\!\left(-\dfrac{\Delta x^{\gamma} + \Delta y^{\gamma}}{W_g^{\gamma} + H_g^{\gamma}}\right)\cdot \mathrm{IoU}$",
 }
 EQ_IMG = {}
@@ -79,6 +79,9 @@ S_EQNUM = style("eqn", fontSize=10.5, leading=14, alignment=TA_CENTER,
 
 def md_inline(text):
     t = escape(text)
+    # math-mode identifiers (e.g. $\text{mAP}=0$): render upright, strip delimiters
+    t = re.sub(r'\\text\{([^}]*)\}', r'\1', t)
+    t = re.sub(r'\$([^$]*)\$', r'\1', t)
     t = re.sub(r'`([^`]+)`', r'<font face="Courier">\1</font>', t)
     t = re.sub(r'\*\*([^*]+)\*\*', r'<b>\1</b>', t)
     t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'<i>\1</i>', t)
@@ -147,8 +150,9 @@ def add_figure():
         story.append(Paragraph(
             "Figure 1. Cross-domain localization degradation from VisDrone "
             "(in-domain) to UAVDT-M (zero-shot). (a) Mean best per-image IoU "
-            "drops from 0.40 to 0.17. (b) Image-level overlap rates at "
-            "IoU \u2265 0.25 and IoU \u2265 0.50 collapse across the domain shift.",
+            "drops from 0.40 to 0.27. (b) Fraction of test images achieving at "
+            "least 0.25 and 0.50 IoU overlap, showing performance degradation "
+            "under domain shift.",
             S_CAP))
     except Exception as e:
         print("figure embed skipped:", e)

@@ -38,7 +38,7 @@ BODY = [
           "residual performance of the model into a resolved localization "
           "deficit and an open classification deficit attributable to a limited "
           "data\u2013compute regime, and we further quantify a severe zero-shot "
-          "domain shift on UAVDT-M (mean best-IoU 0.40 \u2192 0.171). The work "
+          "domain shift on UAVDT-M (mean best-IoU 0.40 \u2192 0.271). The work "
           "deliberately isolates three non-conflating failure categories and "
           "reports the negative results honestly, which we believe is of direct "
           "value to reproducible remote-sensing research."),
@@ -48,7 +48,7 @@ BODY = [
           "analysis (VisDrone \u2192 UAVDT-M) with a reproducibility methodology. The "
           "compact Letter format matches the focused scope of this study."),
     ("sp", ""),
-    ("p", "Authors: Wang Qinmin, Wang Hongyuan, Li Peipei, and Wang Zongzhong "
+    ("p", "Authors: Qinmin Wang, Zhenzhen Hu, Hongyuan Wang, and Yuming Sun "
           "(corresponding author)."),
     ("p", "Manuscript type: Research Letter. Main text is within the 10-page "
           "limit; 1 figure and 3 tables (plus 1 supplementary table)."),
@@ -64,10 +64,10 @@ BODY = [
     ("sp", ""),
     ("p", "Sincerely,"),
     ("sp", ""),
-    ("p", "Wang Zongzhong"),
-    ("p", "School of Electromechanical Engineering, Guangdong University of Technology, Guangzhou, China"),
-    ("p", "Email: wangzz@gdut.edu.cn"),
-    ("p", "ORCID: [to be supplied]"),
+    ("p", "Yuming Sun"),
+    ("p", "School of Computer Science and Artificial Intelligence, Guangdong University of Science and Technology, Dongguan, China"),
+    ("p", "Email: sunyuming@gdust.edu.cn"),
+    ("p", "ORCID: 0009-0003-7222-2390"),
 ]
 
 S_P = ParagraphStyle("p", fontName="Times", fontSize=11, leading=15,
@@ -90,7 +90,7 @@ doc = SimpleDocTemplate(PDF, pagesize=A4,
                         leftMargin=2.5*cm, rightMargin=2.5*cm,
                         topMargin=2.5*cm, bottomMargin=2.5*cm,
                         title="Cover Letter - Remote Sensing Letters",
-                        author="Wang Zongzhong")
+                        author="Yuming Sun")
 doc.build(story)
 print("Saved cover letter PDF ->", PDF)
 

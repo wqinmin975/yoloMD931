@@ -35,7 +35,7 @@ def set_run(run, size=None, bold=False, italic=False, mono=False):
     rf.set(qn("w:eastAsia"), run.font.name)
     return run
 
-TOKEN = re.compile(r"(\*\*.+?\*\*|\*[^*]+?\*|`[^`]+?`|\^[A-Za-z\u03b1-\u03c9\u0391-\u03a9])")
+TOKEN = re.compile(r"(\$[^$]+\$|\*\*.+?\*\*|\*[^*]+?\*|`[^`]+?`|\^[A-Za-z\u03b1-\u03c9\u0391-\u03a9])")
 
 def add_runs(p, text, size=11, base_bold=False):
     """Inline formatting: **bold**, *italic*, `mono`, ^super."""
@@ -48,6 +48,9 @@ def add_runs(p, text, size=11, base_bold=False):
             set_run(p.add_run(part[1:-1]), size, italic=True)
         elif part.startswith("`") and part.endswith("`") and len(part) > 2:
             set_run(p.add_run(part[1:-1]), size, mono=True)
+        elif part.startswith("$") and part.endswith("$") and len(part) > 2:
+            inner = re.sub(r"\\text\{([^}]*)\}", r"\1", part[1:-1])
+            set_run(p.add_run(inner), size)
         elif part.startswith("^") and len(part) == 2:
             r = set_run(p.add_run(part[1]), size, bold=base_bold)
             r.font.superscript = True
@@ -138,8 +141,9 @@ def add_figure(doc):
     set_run(cap.add_run(
         "Figure 1. Cross-domain localization degradation from VisDrone "
         "(in-domain) to UAVDT-M (zero-shot). (a) Mean best per-image IoU "
-        "drops from 0.40 to 0.17. (b) Image-level overlap rates at "
-        "IoU \u2265 0.25 and IoU \u2265 0.50 collapse across the domain shift."),
+        "drops from 0.40 to 0.27. (b) Fraction of test images achieving at "
+        "least 0.25 and 0.50 IoU overlap, showing performance degradation "
+        "under domain shift."),
         size=9, italic=True)
 
 # ---------- build ----------
